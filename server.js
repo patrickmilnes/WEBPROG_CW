@@ -5,4 +5,4 @@ const port = 8080;
 app.use(express.static("public"));
 
 app.listen(port);
-console.log("localhost:8080");
+console.log("http://localhost:8080");
