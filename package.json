@@ -1,0 +1,22 @@
+{
+  "name": "webprog_cw",
+  "version": "1.0.0",
+  "description": "My coursework for the web programming module",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patrickmilnes/WEBPROG_CW.git"
+  },
+  "author": "patrickmilnes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/patrickmilnes/WEBPROG_CW/issues"
+  },
+  "homepage": "https://github.com/patrickmilnes/WEBPROG_CW#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
