@@ -1,4 +1,5 @@
 const express = require('express');
+const pouchDB = require('pouchdb');
 const app = express();
 const port = 8080;
 
