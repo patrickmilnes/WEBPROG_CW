@@ -10,7 +10,6 @@ console.log("http://localhost:8080");
 const { Client } = require('pg')
 const client = new Client({
     user: "up899929",
-    password: "",
     host: "localhost",
     port: 5432,
     database: "test"
