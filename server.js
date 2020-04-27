@@ -7,10 +7,10 @@ app.use(express.static("public"));
 app.listen(port);
 console.log("http://localhost:8080");
 
-const { Client } = require('pg')
+const { Client } = require('pg');
 const client = new Client({
     user: "up899929",
-    password: "postgres",
+    password: "root",
     host: "localhost",
     port: 5432,
     database: "test"
