@@ -10,6 +10,7 @@ console.log("http://localhost:8080");
 const { Client } = require('pg')
 const client = new Client({
     user: "up899929",
+    password: "postgres",
     host: "localhost",
     port: 5432,
     database: "test"
@@ -17,5 +18,5 @@ const client = new Client({
 
 client.connect()
 .then(() => console.log("Connection Successful"))
-.catch(e => console.log("ERROR"))
+.catch(e => console.log)
 .finally(() => client.end());
