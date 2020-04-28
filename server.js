@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const app = express();
 const port = 8080;
@@ -18,5 +20,6 @@ const client = new Client({
 
 client.connect()
 .then(() => console.log("Connection Successful"))
+.query('SELECT NOW() as now')
 .catch(e => console.log)
 .finally(() => client.end());
