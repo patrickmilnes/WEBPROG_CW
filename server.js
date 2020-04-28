@@ -20,6 +20,7 @@ const client = new Client({
 
 client.connect()
 .then(() => console.log("Connection Successful"))
-.query('SELECT NOW() as now')
+.then(() => client.query("SELECT NOW() as now"))
+.then(results => console.log(results))
 .catch(e => console.log)
 .finally(() => client.end());
