@@ -2,7 +2,7 @@
 
 const express = require('express');
 const http = require('http');
-const { Client } = require('pg');
+const { Pool } = require('pg');
 const ws = require('ws');
 const app = express();
 const port = 8080;
@@ -13,37 +13,89 @@ app.use(express.static(__dirname + '/public'));
 const server = http.createServer(app);
 const wss = new ws.Server({server});
 
-wss.on('connection', (ws) => {
-    ws.send(JSON.stringify(getJson()));
-});
+
 
 server.listen(port);
 console.log("http://localhost:8080");
 
-async function getJson() {
-    let json;
-    const questionnaire = await fetch(jsonFile)
-    .then((data) => {
-        json = data.json();
-    })
-    .catch((error) => {
-        console.log(error);
-    });
-    
-    return json;
+wss.on('connection', onConnection);
+
+async function onConnection(ws) {
+    // await connect();
+    const text = JSON.stringify(await start());
+    console.log(`Sending: ${text}`)
+    ws.send(text);
+    // await disconnect();
 }
 
-const client = new Client({
+const pool = new Pool({
     user: "up899929",
     password: "root",
     host: "localhost",
     port: 5432,
-    database: "test"
+    database: "test",
+    max: 10,
+    connectionTimeoutMillis: 20000,
+    idleTimeoutMillis:60000
+    
 });
 
-client.connect()
-.then(() => console.log("Connection Successful"))
-.then(() => client.query("SELECT * FROM testTable"))
-.then(results => console.table(results.rows))
-.catch(e => console.log)
-.finally(() => client.end());
+async function start() {
+    try {
+        // await connect();
+        const results = await queryDb();
+        // await disconnect();
+        return await results;
+    } catch (error) {
+        console.log(error);
+    }
+    // await connect();
+    // console.log(await queryDb());
+    // await disconnect();
+}
+
+async function connect() {
+    try {
+        await pool.connect();
+    } catch (error) {
+        console.log(`Connection Error: ${error}`);
+    }
+}
+
+async function disconnect() {
+    try {
+        await pool.end();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function queryDb() {
+    try {
+        const results = await pool.query("select * from testtable");
+        return results.rows;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// start();
+
+// async function getQuestionnaire() {
+//     try {
+//         // await client.connect();
+//         const query = await client.query("select * from testtable");
+//         // await client.end();
+//         const json = await JSON.stringify(query.fields);
+//         return await json
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+
+// async function openConnection() {
+//     const conn = await client.connect();
+//     console.log(getQuestionnaire());
+//     await client.end();
+// }
+

@@ -55,3 +55,6 @@ values ('Example-Questionnaire', '
   ]
 }'
 );
+
+insert into testtable
+values ('Dave', 34);

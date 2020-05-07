@@ -4,6 +4,7 @@
   "description": "My coursework for the web programming module",
   "main": "index.html",
   "scripts": {
+    "start": "node server.js",
     "test": "server.js"
   },
   "repository": {
