@@ -72,8 +72,8 @@ async function disconnect() {
 
 async function queryDb() {
     try {
-        const results = await pool.query("select * from testtable");
-        return results.rows;
+        const results = await pool.query("select questionnaire from jsontest where name = 'Example-Questionnaire'");
+        return results.rows[0];
     } catch (error) {
         console.log(error);
     }
