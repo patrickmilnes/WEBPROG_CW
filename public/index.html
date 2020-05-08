@@ -5,9 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Questionnaire</title>
     <script src="js/index.js"></script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Questionnaire - Example Questionnaire</h1>
+    <h1 id="questionnaire-title">Questionnaire - Example Questionnaire</h1>
     <ul id="list"></ul>
+
+    <form action="" id="questionnaire-form">
+        <div class="question">
+            <label for="name">What is your name?:</label>
+            <input type="text" name="name" id="n">
+        </div>
+        
+        <div class="question">
+            <h2>What is your quest?:</h2>
+            <input type="text" name="quest" id="q">
+        </div>
+
+    </form>
 </body>
 </html>
