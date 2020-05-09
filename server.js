@@ -23,7 +23,7 @@ wss.on('connection', onConnection);
 async function onConnection(ws) {
     // await connect();
     const text = JSON.stringify(await start());
-    console.log(`Sending: ${text}`)
+    console.log(`Sending JSON DATA`);
     ws.send(text);
     // await disconnect();
 }

@@ -19,7 +19,7 @@ function addToDom(data) {
         } else if (question.type == 'single-select') {
             master.appendChild(createSingleSelectCard(question));
         } else if (question.type == 'multi-select') {
-            //master.appendChild(createMultiSelectCard(question));
+            master.appendChild(createMultiSelectCard(question));
         } else if (question.type == 'number') {
             master.appendChild(createNumCard(question));
         }
@@ -76,7 +76,25 @@ function createSingleSelectCard(question) {
 }
 
 function createMultiSelectCard(question) {
+    let card = createSectionWrapper(question.text);
 
+    let wrapper = document.createElement('div');
+    wrapper.className = 'multi-select';
+
+    for (let i = 0; i < question.options.length; i++) {
+        let input = document.createElement('input');
+        input.setAttribute('type', 'checkbox');
+        input.setAttribute('name', i);
+        let label = document.createElement('label');
+        label.setAttribute('for', i);
+        label.textContent = " " + question.options[i];
+        let optionWrapper = document.createElement('div');
+        optionWrapper.appendChild(input);
+        optionWrapper.appendChild(label);
+        wrapper.appendChild(optionWrapper);
+    }
+    card.appendChild(wrapper);
+    return card;
 }
 
 function createNumCard(question) {
