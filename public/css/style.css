@@ -12,14 +12,25 @@
 }
 
 .question {
-    margin: 2em;
-    padding: 2em;
+    margin: 1em;
+    padding: 1em;
     border: solid;
+}
+
+.question h2 {
+    margin-bottom: 1em;
+}
+
+.multi-select {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* text-align: center; */
+    gap: 10px;
 }
 
 #questionnaire-form {
     margin: auto;
-    margin-left: 2em;
-    margin-right: 2em;
+    margin-left: 1em;
+    margin-right: 1em;
     /* border: solid; */
 }
