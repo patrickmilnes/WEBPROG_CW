@@ -1,6 +1,7 @@
 'use strict';
 
 const ws = new WebSocket("ws://" + window.location.hostname + ":8080/");
+const submitButton = document.querySelector('#submut-button');
 
 function fromServer(e) {
     const data = JSON.parse(e.data);
@@ -118,4 +119,9 @@ function createSectionWrapper(title) {
     return questionWrapper;
 }
 
+function submitButtonClick(event) {
+    
+}
+
 ws.addEventListener('message', fromServer);
+submitButton.addEventListener('click', submitButtonClick);
