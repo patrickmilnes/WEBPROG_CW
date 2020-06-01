@@ -223,6 +223,7 @@ function submitButtonClick(event) {
     console.log(resultsData);
     ws.send(resultsData);
     console.log("SENT");
+    document.querySelector('#submit-button').disabled = true;
 }
 
 /**
@@ -233,9 +234,29 @@ function downloadButtonClick(event) {
     ws.send("DOWNLOAD");
 }
 
+/**
+ * Changes css to dark mode.
+ * @param {Event} event 
+ */
 function darkModeButtonClick(event) {
     console.log("HELLO");
-    document.querySelector("body").style.backgroundColor = 'black';
+    document.querySelector("body").style.backgroundColor = '#404347';
+    let sectionEle = document.querySelectorAll("section");
+    document.querySelector("h1").style.color = '#d7d9db';
+    let h2Ele = document.querySelectorAll("h2");
+    let labelEle = document.querySelectorAll("label");
+
+    h2Ele.forEach(element => {
+        element.style.color = '#d7d9db';
+    });
+
+    labelEle.forEach(element => {
+        element.style.color = '#d7d9db';
+    });
+
+    sectionEle.forEach(element => {
+        element.style.borderColor = '#d7d9db';
+    });
 }
 
 /**
