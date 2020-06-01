@@ -13,9 +13,6 @@
   },
   "author": "UP899929",
   "license": "ISC",
-  "bugs": {
-    "url": "n/a"
-  },
   "homepage": "",
   "dependencies": {
     "express": "^4.17.1",
