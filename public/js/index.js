@@ -21,6 +21,7 @@ let name = "";
 window.onload = function() {
     document.querySelector('#submit-button').addEventListener('click', submitButtonClick);
     document.querySelector('#download-button').addEventListener('click', downloadButtonClick);
+    document.querySelector('#dark-mode-button').addEventListener('click', darkModeButtonClick);
 }
 
 ws.addEventListener('message', fromServer);
@@ -122,7 +123,7 @@ function createTextCard(question, id) {
     // let button = document.createElement('button');
     // button.textContent = 'Next';
     card.appendChild(input);
-    card.appendChild(button);
+    // card.appendChild(button);
     card.setAttribute('id', id);
     return card;
 }
@@ -195,7 +196,7 @@ function createNumCard(question, id) {
     // let button = document.createElement('button');
     // button.textContent = 'Next';
     card.appendChild(input);
-    card.appendChild(button);
+    // card.appendChild(button);
     card.setAttribute('id', id);
     return card;
 }
@@ -230,6 +231,11 @@ function submitButtonClick(event) {
  */
 function downloadButtonClick(event) {
     ws.send("DOWNLOAD");
+}
+
+function darkModeButtonClick(event) {
+    console.log("HELLO");
+    document.querySelector("body").style.backgroundColor = 'black';
 }
 
 /**
