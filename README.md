@@ -19,4 +19,6 @@ I decided to keep the looks simple and clean to provide a professional looking U
 I used postgres database as my storage. Everytime a responce is submitted it is inserted into the database. I used postgres because it was already installed on our VMs.
 ### In the Future
 In the future I would like to add OAuth through google. So that I can make it viable, the download button would only be visible to admin and results could be more comprehensive.
+## Aditional Feature
+I added a dark mode, so that the screen colours are easier on the eyes.
 
