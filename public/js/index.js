@@ -119,8 +119,8 @@ function createTextCard(question, id) {
     let input = document.createElement('input');
     input.setAttribute('type', 'text');
     input.setAttribute('name', question.id);
-    let button = document.createElement('button');
-    button.textContent = 'Next';
+    // let button = document.createElement('button');
+    // button.textContent = 'Next';
     card.appendChild(input);
     card.appendChild(button);
     card.setAttribute('id', id);
@@ -192,8 +192,8 @@ function createNumCard(question, id) {
     let input = document.createElement('input');
     input.setAttribute('type', 'number');
     input.setAttribute('name', question.id);
-    let button = document.createElement('button');
-    button.textContent = 'Next';
+    // let button = document.createElement('button');
+    // button.textContent = 'Next';
     card.appendChild(input);
     card.appendChild(button);
     card.setAttribute('id', id);
