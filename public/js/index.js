@@ -55,7 +55,7 @@ function fromServer(e) {
 
     if (Array.isArray(data)) {
         console.log(data);
-        download("results.json", JSON.stringify(data));
+        downloadJson("results.json", JSON.stringify(data));
     } else {
         console.log(data);
         addToDom(data);
@@ -64,15 +64,15 @@ function fromServer(e) {
     
 }
 
-function download(filename, text) {
+function downloadJson(filename, text) {
     let ele = document.createElement('a');
     ele.setAttribute('href', 'data:json/plain;charset=utf-8,' + encodeURIComponent(text));
     ele.setAttribute('download', filename);
 
     ele.style.display = 'none';
-    document.body.appendChild(element);
+    document.body.appendChild(ele);
     ele.click();
-    document.body.removeChild(element);
+    document.body.removeChild(ele);
 }
 
 /**
