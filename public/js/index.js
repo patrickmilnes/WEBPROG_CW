@@ -174,7 +174,6 @@ function createMultiSelectCard(question, id) {
         label.setAttribute('for', i);
         label.textContent = " " + question.options[i];
         let optionWrapper = document.createElement('div');
-        //optionWrapper.setAttribute('id', 'multi-' + id + '-' + i);
         optionWrapper.appendChild(input);
         optionWrapper.appendChild(label);
         wrapper.appendChild(optionWrapper);
@@ -238,23 +237,19 @@ function downloadButtonClick(event) {
  */
 function collectData() {
     const root = document.querySelector('#questionnaire-form');
-    // console.log(root.nodeName);
 
     let results = [];
 
     for (let i = 0; i < root.childNodes.length; i++) {
-        // console.log("Question " + i);
         if (questionsDict[i].type == "multi-select") {
             results.push(collectFromMultiSelect(i))
         } else {
             const section = root.childNodes[i];
             const answer = section.childNodes[1];
-            // console.log(answer.value);
             results.push(answer.value);
         }
 
     }
-    
     const resultsObj = createResultsObject(name, results);
     console.log(resultsObj);
     return resultsObj;
@@ -272,13 +267,11 @@ function collectFromMultiSelect(id) {
     for (let i = 0; i < optionNodes.childNodes.length; i++) {
         const element = optionNodes.childNodes[i];
         if (element.childNodes[0].checked == true) {
-            // console.log(element.childNodes[1].value);
             options.push(true);
         } else {
             options.push(false);
         }
     }
-    
     return options;
 }
 
@@ -292,6 +285,5 @@ function createResultsObject(name, results) {
         name: name + " Results",
         results: results
     }
-
     return resultsObj;
 }
