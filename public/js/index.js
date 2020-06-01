@@ -10,6 +10,9 @@ const ws = new WebSocket("ws://" + window.location.hostname + ":8080/");
  */
 let questionsDict = [];
 
+/**
+ * Name of questionnaire.
+ */
 let name = "";
 
 /**
@@ -21,16 +24,6 @@ window.onload = function() {
 }
 
 ws.addEventListener('message', fromServer);
-
-/**
- * Prints the contents of the questions dictionary.
- * TESTING
- */
-function print() {
-    questionsDict.forEach(object =>{
-        console.log(object);
-    });
-}
 
 /**
  * Creates object from DOM id and question type.
@@ -64,6 +57,11 @@ function fromServer(e) {
     
 }
 
+/**
+ * Creates and downloads json file with results.
+ * @param {String} filename 
+ * @param {String} text 
+ */
 function downloadJson(filename, text) {
     let ele = document.createElement('a');
     ele.setAttribute('href', 'data:json/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -216,6 +214,10 @@ function createSectionWrapper(title) {
     return questionWrapper;
 }
 
+/**
+ * Event handler for click event on the submit button.
+ * @param {Event} event 
+ */
 function submitButtonClick(event) {
     const resultsData = JSON.stringify(collectData());
     console.log(resultsData);
@@ -223,10 +225,17 @@ function submitButtonClick(event) {
     console.log("SENT");
 }
 
+/**
+ * Event handler for click event on the download button.
+ * @param {Event} event 
+ */
 function downloadButtonClick(event) {
     ws.send("DOWNLOAD");
 }
 
+/**
+ * Collects data from questionnaure.
+ */
 function collectData() {
     const root = document.querySelector('#questionnaire-form');
     // console.log(root.nodeName);
@@ -251,7 +260,10 @@ function collectData() {
     return resultsObj;
 }
 
-
+/**
+ * Collects answers from multi-select question.
+ * @param {Int} id -> Id of DOM element.
+ */
 function collectFromMultiSelect(id) {
     const root = document.querySelector('#question-' + id);
     const optionNodes = root.childNodes[1];
@@ -270,6 +282,11 @@ function collectFromMultiSelect(id) {
     return options;
 }
 
+/**
+ * Creates object from questionnaire name and results array.
+ * @param {String} name -> Name of questionnaire.
+ * @param {Array} results -> Array of results.
+ */
 function createResultsObject(name, results) {
     const resultsObj = {
         name: name + " Results",
