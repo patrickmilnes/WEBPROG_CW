@@ -1,11 +1,21 @@
-create table jsonTest (
-	name varchar(50) not null,
-	questionnaire json not null
+DROP TABLE IF EXISTS questionnaire;
+DROP TABLE IF EXISTS results;
+
+create table questionnaire (
+  questionnaire_id serial primary key,
+  questionnaire_name varchar(50) not null,
+  questionnaire_json json not null
 );
 
-insert into jsontest
-values ('Example-Questionnaire', '
-{
+create table results (
+  results_id serial primary key,
+  questionnaire_id serial references questionnaire(questionnaire_id),
+  results_json json not null
+);
+
+insert into questionnaire (questionnaire_name, questionnaire_json)
+values ('Example Questionnaire', 
+'{
   "name": "Example Questionnaire",
   "questions": [
     {
@@ -53,8 +63,4 @@ values ('Example-Questionnaire', '
       ]
     }
   ]
-}'
-);
-
-insert into testtable
-values ('Dave', 34);
+}');

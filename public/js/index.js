@@ -10,11 +10,14 @@ const ws = new WebSocket("ws://" + window.location.hostname + ":8080/");
  */
 let questionsDict = [];
 
+let name = "";
+
 /**
  * Addes event listener to submit button.
  */
 window.onload = function() {
     document.querySelector('#submit-button').addEventListener('click', submitButtonClick);
+    document.querySelector('#download-button').addEventListener('click', downloadButtonClick);
 }
 
 ws.addEventListener('message', fromServer);
@@ -45,12 +48,31 @@ function createObj(id, type) {
 
 /**
  * Event handler to message from data event.
- * @param {event} e -> Event data
+ * @param {event} e -> Event
  */
 function fromServer(e) {
     const data = JSON.parse(e.data);
-    console.log(e.data);
-    addToDom(data);
+
+    if (Array.isArray(data)) {
+        console.log(data);
+        download("results.json", JSON.stringify(data));
+    } else {
+        console.log(data);
+        addToDom(data);
+        name = data.questionnaire_json.name;
+    }
+    
+}
+
+function download(filename, text) {
+    let ele = document.createElement('a');
+    ele.setAttribute('href', 'data:json/plain;charset=utf-8,' + encodeURIComponent(text));
+    ele.setAttribute('download', filename);
+
+    ele.style.display = 'none';
+    document.body.appendChild(element);
+    ele.click();
+    document.body.removeChild(element);
 }
 
 /**
@@ -58,11 +80,11 @@ function fromServer(e) {
  * @param {JSON} data -> JSON data from server.
  */
 function addToDom(data) {
-    setQuestionnaireTitle(data.questionnaire.name);
+    setQuestionnaireTitle(data.questionnaire_json.name);
     let master = document.querySelector('#questionnaire-form');
 
-    for (let i = 0; i < data.questionnaire.questions.length; i++) {
-        const element = data.questionnaire.questions[i];
+    for (let i = 0; i < data.questionnaire_json.questions.length; i++) {
+        const element = data.questionnaire_json.questions[i];
         
         if (element.type == 'text') {
             master.appendChild(createTextCard(element, "question-" + i));
@@ -149,10 +171,12 @@ function createMultiSelectCard(question, id) {
         let input = document.createElement('input');
         input.setAttribute('type', 'checkbox');
         input.setAttribute('name', i);
+        input.setAttribute('value', false);
         let label = document.createElement('label');
         label.setAttribute('for', i);
         label.textContent = " " + question.options[i];
         let optionWrapper = document.createElement('div');
+        //optionWrapper.setAttribute('id', 'multi-' + id + '-' + i);
         optionWrapper.appendChild(input);
         optionWrapper.appendChild(label);
         wrapper.appendChild(optionWrapper);
@@ -193,28 +217,64 @@ function createSectionWrapper(title) {
 }
 
 function submitButtonClick(event) {
-    console.log("SUBMIT BUTTON CLICKED");
+    const resultsData = JSON.stringify(collectData());
+    console.log(resultsData);
+    ws.send(resultsData);
+    console.log("SENT");
 }
 
-let results = [];
+function downloadButtonClick(event) {
+    ws.send("DOWNLOAD");
+}
 
 function collectData() {
-    for (let i = 0; i < questionsDict.length - 1; i++) {
-        //const element = questions[i];
-        if (questionsDict[i].type == "text" || questionsDict[i].type == "number" || questionsDict[i].type == "single-select") {
-            let element = document.querySelector('#question-' + i);
-            console.log(element.childNodes[1].value);
-        } else {
+    const root = document.querySelector('#questionnaire-form');
+    // console.log(root.nodeName);
 
+    let results = [];
+
+    for (let i = 0; i < root.childNodes.length; i++) {
+        // console.log("Question " + i);
+        if (questionsDict[i].type == "multi-select") {
+            results.push(collectFromMultiSelect(i))
+        } else {
+            const section = root.childNodes[i];
+            const answer = section.childNodes[1];
+            // console.log(answer.value);
+            results.push(answer.value);
         }
+
     }
+    
+    const resultsObj = createResultsObject(name, results);
+    console.log(resultsObj);
+    return resultsObj;
 }
+
 
 function collectFromMultiSelect(id) {
     const root = document.querySelector('#question-' + id);
+    const optionNodes = root.childNodes[1];
+    let options = [];
 
-    for (let i = 0; i < root.childNodes.length; i++) {
-        const element = root.childNodes[i];
-        
+    for (let i = 0; i < optionNodes.childNodes.length; i++) {
+        const element = optionNodes.childNodes[i];
+        if (element.childNodes[0].checked == true) {
+            // console.log(element.childNodes[1].value);
+            options.push(true);
+        } else {
+            options.push(false);
+        }
     }
+    
+    return options;
+}
+
+function createResultsObject(name, results) {
+    const resultsObj = {
+        name: name + " Results",
+        results: results
+    }
+
+    return resultsObj;
 }

@@ -5,18 +5,18 @@
   "main": "index.html",
   "scripts": {
     "start": "node server.js",
-    "test": "server.js"
+    "setup": "createdb test && psql test < database.sql"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/patrickmilnes/WEBPROG_CW.git"
+    "url": ""
   },
-  "author": "patrickmilnes",
+  "author": "UP899929",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/patrickmilnes/WEBPROG_CW/issues"
+    "url": "n/a"
   },
-  "homepage": "https://github.com/patrickmilnes/WEBPROG_CW#readme",
+  "homepage": "",
   "dependencies": {
     "express": "^4.17.1",
     "pg": "^8.0.3",
